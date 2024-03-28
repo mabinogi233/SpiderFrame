@@ -682,7 +682,9 @@ class XmlSpider extends Spider<Map<String,Object>>{
                 }
             }
             WebElement _webElement = null;
-            if (type.equals("xpath")) {
+            if (parse.equals("")){
+                _webElement = webElement;
+            }else if (type.equals("xpath")) {
                 _webElement = webElement.findElement(By.xpath(parse));
             }else if (type.equals("id")){
                 _webElement = webElement.findElement(By.id(parse));
