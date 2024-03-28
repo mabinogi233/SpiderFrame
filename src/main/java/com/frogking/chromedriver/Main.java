@@ -526,6 +526,7 @@ class XmlSpider extends Spider<Map<String,Object>>{
                 String name = "";
                 String type = "";
                 String parse = "";
+                String click_parse = "";
                 for (int j = 0; j < node.getChildNodes().getLength(); j++) {
                     Node element = node.getChildNodes().item(j);
                     if (element.getNodeName().equals("name")) {
@@ -534,8 +535,30 @@ class XmlSpider extends Spider<Map<String,Object>>{
                         type = element.getTextContent();
                     } else if (element.getNodeName().equals("parse")) {
                         parse = element.getTextContent();
+                    } else if (element.getNodeName().equals("click")){
+                        click_parse = element.getTextContent();
                     }
                 }
+
+                if (!click_parse.equals("")){
+                    if (type.equals("xpath")) {
+                        WebElement click = driver.findElement(By.xpath(click_parse));
+                        driver.executeScript("arguments[0].click();", click);
+                    }else if (type.equals("id")){
+                        WebElement click = driver.findElement(By.id(click_parse));
+                        driver.executeScript("arguments[0].click();", click);
+                    }else if (type.equals("class")){
+                        WebElement click = driver.findElement(By.className(click_parse));
+                        driver.executeScript("arguments[0].click();", click);
+                    }else if (type.equals("css")){
+                        WebElement click = driver.findElement(By.cssSelector(click_parse));
+                        driver.executeScript("arguments[0].click();", click);
+                    }else if (type.equals("name")){
+                        WebElement click = driver.findElement(By.name(click_parse));
+                        driver.executeScript("arguments[0].click();", click);
+                    }
+                }
+
                 List<WebElement> _webElements = null;
                 if (type.equals("xpath")) {
                     _webElements = driver.findElements(By.xpath(parse));
@@ -554,7 +577,7 @@ class XmlSpider extends Spider<Map<String,Object>>{
                         for (int k = 0; k < node.getChildNodes().getLength(); k++) {
                             Node _node = node.getChildNodes().item(k);
                             if (_node.getNodeName().equals("elements") || _node.getNodeName().equals("element")) {
-                                parse_element(_webElement, _node, _resultMap);
+                                parse_element(_webElement, _node, _resultMap,driver);
                             }
                         }
                         elements.add(_resultMap);
@@ -562,10 +585,10 @@ class XmlSpider extends Spider<Map<String,Object>>{
                     resultMap.put(name, elements);
                 }
             } else if (node.getNodeName().equals("element")) {
-                Map<String, Object> ele = new HashMap<>();
                 String name = "";
                 String type = "";
                 String parse = "";
+                String click_parse = "";
                 for (int j = 0; j < node.getChildNodes().getLength(); j++) {
                     Node element = node.getChildNodes().item(j);
                     if (element.getNodeName().equals("name")) {
@@ -574,8 +597,30 @@ class XmlSpider extends Spider<Map<String,Object>>{
                         type = element.getTextContent();
                     } else if (element.getNodeName().equals("parse")) {
                         parse = element.getTextContent();
+                    } else if (element.getNodeName().equals("click")){
+                        click_parse = element.getTextContent();
                     }
                 }
+
+                if (!click_parse.equals("")){
+                    if (type.equals("xpath")) {
+                        WebElement click = driver.findElement(By.xpath(click_parse));
+                        driver.executeScript("arguments[0].click();", click);
+                    }else if (type.equals("id")){
+                        WebElement click = driver.findElement(By.id(click_parse));
+                        driver.executeScript("arguments[0].click();", click);
+                    }else if (type.equals("class")){
+                        WebElement click = driver.findElement(By.className(click_parse));
+                        driver.executeScript("arguments[0].click();", click);
+                    }else if (type.equals("css")){
+                        WebElement click = driver.findElement(By.cssSelector(click_parse));
+                        driver.executeScript("arguments[0].click();", click);
+                    }else if (type.equals("name")){
+                        WebElement click = driver.findElement(By.name(click_parse));
+                        driver.executeScript("arguments[0].click();", click);
+                    }
+                }
+
                 WebElement _webElement = null;
                 if (type.equals("xpath")) {
                     _webElement = driver.findElement(By.xpath(parse));
@@ -607,30 +652,30 @@ class XmlSpider extends Spider<Map<String,Object>>{
                                 Pattern pattern = Pattern.compile(_regex);
                                 Matcher matcher = pattern.matcher(text);
                                 if (matcher.find()) {
-                                    ele.put(name, matcher.group());
+                                    resultMap.put(name, matcher.group());
                                 }
                             } else if (_type.equals("delete")) {
-                                ele.put(name, text.replaceAll(_regex, ""));
+                                resultMap.put(name, text.replaceAll(_regex, ""));
                             }
                         } else if (element.getNodeName().equals("attribute")) {
                             String attr = _webElement.getAttribute(element.getFirstChild().getTextContent());
-                            ele.put(name, attr);
+                            resultMap.put(name, attr);
                         }
                     }
-                    resultMap.put(name, ele);
                 }
             }
         }
-        logger.info("resultMap:{}",resultMap);
+        //logger.info("resultMap:{}",resultMap);
         return resultMap;
     }
 
-    private void parse_element(WebElement webElement,Node node,Map<String,Object> resultMap){
+    private void parse_element(WebElement webElement,Node node,Map<String,Object> resultMap,ChromeDriver driver){
         if(node.getNodeName().equals("elements")){
             List<Map<String,Object>> elements = new ArrayList<>();
             String name = "";
             String type = "";
             String parse = "";
+            String click_parse = "";
             for (int j = 0; j < node.getChildNodes().getLength(); j++) {
                 Node element = node.getChildNodes().item(j);
                 if (element.getNodeName().equals("name")){
@@ -639,6 +684,26 @@ class XmlSpider extends Spider<Map<String,Object>>{
                     type = element.getTextContent();
                 }else if (element.getNodeName().equals("parse")){
                     parse = element.getTextContent();
+                }else if (element.getNodeName().equals("click")){
+                    click_parse = element.getTextContent();
+                }
+            }
+            if (!click_parse.equals("")){
+                if (type.equals("xpath")) {
+                    WebElement click = webElement.findElement(By.xpath(click_parse));
+                    driver.executeScript("arguments[0].click();", click);
+                }else if (type.equals("id")){
+                    WebElement click = webElement.findElement(By.id(click_parse));
+                    driver.executeScript("arguments[0].click();", click);
+                }else if (type.equals("class")){
+                    WebElement click = webElement.findElement(By.className(click_parse));
+                    driver.executeScript("arguments[0].click();", click);
+                }else if (type.equals("css")){
+                    WebElement click = webElement.findElement(By.cssSelector(click_parse));
+                    driver.executeScript("arguments[0].click();", click);
+                }else if (type.equals("name")){
+                    WebElement click = webElement.findElement(By.name(click_parse));
+                    driver.executeScript("arguments[0].click();", click);
                 }
             }
             List<WebElement> _webElements = null;
@@ -659,7 +724,7 @@ class XmlSpider extends Spider<Map<String,Object>>{
                     for (int k = 0; k < node.getChildNodes().getLength(); k++) {
                         Node _node = node.getChildNodes().item(k);
                         if (_node.getNodeName().equals("elements") || _node.getNodeName().equals("element")) {
-                            parse_element(_webElement, _node, _resultMap);
+                            parse_element(_webElement, _node, _resultMap, driver);
                         }
                     }
                     elements.add(_resultMap);
@@ -667,10 +732,10 @@ class XmlSpider extends Spider<Map<String,Object>>{
                 resultMap.put(name, elements);
             }
         }else if (node.getNodeName().equals("element")){
-            Map<String,Object> ele = new HashMap<>();
             String name = "";
             String type = "";
             String parse = "";
+            String click_parse = "";
             for (int j = 0; j < node.getChildNodes().getLength(); j++) {
                 Node element = node.getChildNodes().item(j);
                 if (element.getNodeName().equals("name")){
@@ -679,8 +744,30 @@ class XmlSpider extends Spider<Map<String,Object>>{
                     type = element.getTextContent();
                 }else if (element.getNodeName().equals("parse")){
                     parse = element.getTextContent();
+                }else if (element.getNodeName().equals("click")){
+                    click_parse = element.getTextContent();
                 }
             }
+
+            if (!click_parse.equals("")){
+                if (type.equals("xpath")) {
+                    WebElement click = webElement.findElement(By.xpath(click_parse));
+                    driver.executeScript("arguments[0].click();", click);
+                }else if (type.equals("id")){
+                    WebElement click = webElement.findElement(By.id(click_parse));
+                    driver.executeScript("arguments[0].click();", click);
+                }else if (type.equals("class")){
+                    WebElement click = webElement.findElement(By.className(click_parse));
+                    driver.executeScript("arguments[0].click();", click);
+                }else if (type.equals("css")){
+                    WebElement click = webElement.findElement(By.cssSelector(click_parse));
+                    driver.executeScript("arguments[0].click();", click);
+                }else if (type.equals("name")){
+                    WebElement click = webElement.findElement(By.name(click_parse));
+                    driver.executeScript("arguments[0].click();", click);
+                }
+            }
+
             WebElement _webElement = null;
             if (parse.equals("")){
                 _webElement = webElement;
@@ -695,6 +782,7 @@ class XmlSpider extends Spider<Map<String,Object>>{
             }else if (type.equals("name")){
                 _webElement = webElement.findElement(By.name(parse));
             }
+
             if (_webElement != null) {
                 for (int j = 0; j < node.getChildNodes().getLength(); j++) {
                     Node element = node.getChildNodes().item(j);
@@ -714,10 +802,10 @@ class XmlSpider extends Spider<Map<String,Object>>{
                             Pattern pattern = Pattern.compile(_regex);
                             Matcher matcher = pattern.matcher(text);
                             if (matcher.find()){
-                                ele.put(name, matcher.group());
+                                resultMap.put(name, matcher.group());
                             }
                         }else if (_type.equals("delete")){
-                            ele.put(name, text.replaceAll(_regex, ""));
+                            resultMap.put(name, text.replaceAll(_regex, ""));
                         }
                     }
                     else if (element.getNodeName().equals("attribute")) {
@@ -729,10 +817,9 @@ class XmlSpider extends Spider<Map<String,Object>>{
                             }
                         }
                         String attr = _webElement.getAttribute(_type);
-                        ele.put(name, attr);
+                        resultMap.put(name, attr);
                     }
                 }
-                resultMap.put(name, ele);
             }
         }
     }
