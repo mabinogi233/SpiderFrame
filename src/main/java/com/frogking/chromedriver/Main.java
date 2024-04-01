@@ -435,12 +435,14 @@ class WriterThread<T>{
                                 FileWriter fileWriter = new FileWriter(jsonPath,true);
                                 fileWriter.write(json);
                                 fileWriter.write("\n");
+                                fileWriter.flush();
                                 fileWriter.close();
                             }else{
                                 new File(jsonPath).createNewFile();
                                 FileWriter fileWriter = new FileWriter(jsonPath);
                                 fileWriter.write(json);
                                 fileWriter.write("\n");
+                                fileWriter.flush();
                                 fileWriter.close();
                             }
                         } catch (IOException e) {
@@ -451,12 +453,14 @@ class WriterThread<T>{
                                 FileWriter fileWriter = new FileWriter(restartFilePath,true);
                                 fileWriter.write(url);
                                 fileWriter.write("\n");
+                                fileWriter.flush();
                                 fileWriter.close();
                             }else{
                                 new File(restartFilePath).createNewFile();
                                 FileWriter fileWriter = new FileWriter(restartFilePath,true);
                                 fileWriter.write(url);
                                 fileWriter.write("\n");
+                                fileWriter.flush();
                                 fileWriter.close();
                             }
                         } catch (IOException e) {
@@ -619,6 +623,9 @@ class XmlSpider extends Spider<Map<String,Object>>{
                         WebElement click = driver.findElement(By.name(click_parse));
                         driver.executeScript("arguments[0].click();", click);
                     }
+                    try {
+                        Thread.sleep(300);
+                    }catch (Exception ignored){ }
                 }
 
                 WebElement _webElement = null;
@@ -705,6 +712,9 @@ class XmlSpider extends Spider<Map<String,Object>>{
                     WebElement click = webElement.findElement(By.name(click_parse));
                     driver.executeScript("arguments[0].click();", click);
                 }
+                try {
+                    Thread.sleep(300);
+                }catch (Exception ignored){ }
             }
             List<WebElement> _webElements = null;
             if (type.equals("xpath")) {
