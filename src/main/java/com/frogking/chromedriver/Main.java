@@ -476,6 +476,14 @@ class WriterThread<T>{
             }
         });
         thread.start();
+        try {
+            thread.join();
+            for(Thread t : insertThreads){
+                t.join();
+            }
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
     }
 }
 
