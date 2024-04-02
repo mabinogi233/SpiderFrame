@@ -377,10 +377,6 @@ abstract class Spider<T> {
             });
             threads[j].start();
         }
-        for (int j = 0; j < threadNum; j++) {
-            threads[j].join();
-        }
-
         return threads;
     }
 }
@@ -408,7 +404,7 @@ class WriterThread<T>{
         this.restartFilePath = restartFilePath;
     }
 
-    public void start(Thread[] insertThreads){
+    public Thread start(Thread[] insertThreads){
         Thread thread = new Thread(new Runnable() {
             @Override
             public void run() {
@@ -476,14 +472,7 @@ class WriterThread<T>{
             }
         });
         thread.start();
-        try {
-            thread.join();
-            for(Thread t : insertThreads){
-                t.join();
-            }
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+        return thread;
     }
 }
 
@@ -522,6 +511,7 @@ class XmlSpider extends Spider<Map<String,Object>>{
         if (t % one_proxy_use_num == 0){
             t = 0;
             this.proxy = HttpUtil.get(proxy_url);
+            logger.info("get proxy: " + this.proxy);
         }else {
             t++;
         }
@@ -916,8 +906,13 @@ class XmlSpiderBuilder{
         try {
             Thread[] ts = xmlSpider.run(spiderWaittime, oneProxyUseNum, threadNum);
             logger.info("spider run success");
-            writerThread.start(ts);
+            Thread tt = writerThread.start(ts);
             logger.info("writer thread start success");
+            for (Thread t : ts){
+                t.join();
+            }
+            tt.join();
+            logger.info("spider run finish");
         } catch (InterruptedException e) {
             logger.error("spider run error");
             e.printStackTrace();
