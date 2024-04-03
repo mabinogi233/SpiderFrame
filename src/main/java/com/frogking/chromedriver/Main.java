@@ -235,7 +235,7 @@ abstract class Spider<T> {
             driver.get(url);
             logger.info("get page from url: " + url);
             try{
-                Thread.sleep(5000);
+                Thread.sleep(2200);
             }catch (Exception ignored){ }
             return driver;
         }else if (method.equals("http")){
@@ -380,6 +380,9 @@ abstract class Spider<T> {
                 }
             });
             threads[j].start();
+            try {
+                Thread.sleep(1000);
+            }catch (Exception ignored){ }
         }
         return threads;
     }
@@ -534,6 +537,7 @@ class XmlSpider extends Spider<Map<String,Object>>{
                 String type = "";
                 String parse = "";
                 String click_parse = "";
+                String scroll_parse = "";
                 for (int j = 0; j < node.getChildNodes().getLength(); j++) {
                     Node element = node.getChildNodes().item(j);
                     if (element.getNodeName().equals("name")) {
@@ -544,7 +548,31 @@ class XmlSpider extends Spider<Map<String,Object>>{
                         parse = element.getTextContent();
                     } else if (element.getNodeName().equals("click")){
                         click_parse = element.getTextContent();
+                    } else if (element.getNodeName().equals("scroll")){
+                        scroll_parse = element.getTextContent();
                     }
+                }
+
+                if(!scroll_parse.equals("")){
+                    if (type.equals("xpath")) {
+                        WebElement scroll = driver.findElement(By.xpath(scroll_parse));
+                        driver.executeScript("arguments[0].scrollIntoView();", scroll);
+                    }else if (type.equals("id")){
+                        WebElement scroll = driver.findElement(By.id(scroll_parse));
+                        driver.executeScript("arguments[0].scrollIntoView();", scroll);
+                    }else if (type.equals("class")){
+                        WebElement scroll = driver.findElement(By.className(scroll_parse));
+                        driver.executeScript("arguments[0].scrollIntoView();", scroll);
+                    }else if (type.equals("css")){
+                        WebElement scroll = driver.findElement(By.cssSelector(scroll_parse));
+                        driver.executeScript("arguments[0].scrollIntoView();", scroll);
+                    }else if (type.equals("name")){
+                        WebElement scroll = driver.findElement(By.name(scroll_parse));
+                        driver.executeScript("arguments[0].scrollIntoView();", scroll);
+                    }
+                    try {
+                        Thread.sleep(1000);
+                    } catch (InterruptedException ignored) { }
                 }
 
                 if (!click_parse.equals("")){
@@ -596,6 +624,7 @@ class XmlSpider extends Spider<Map<String,Object>>{
                 String type = "";
                 String parse = "";
                 String click_parse = "";
+                String scroll_parse = "";
                 for (int j = 0; j < node.getChildNodes().getLength(); j++) {
                     Node element = node.getChildNodes().item(j);
                     if (element.getNodeName().equals("name")) {
@@ -606,6 +635,32 @@ class XmlSpider extends Spider<Map<String,Object>>{
                         parse = element.getTextContent();
                     } else if (element.getNodeName().equals("click")){
                         click_parse = element.getTextContent();
+                    } else if (element.getNodeName().equals("scroll")){
+                        scroll_parse = element.getTextContent();
+                    }
+                }
+
+                if (!scroll_parse.equals("")){
+                    if (type.equals("xpath")) {
+                        WebElement scroll = driver.findElement(By.xpath(scroll_parse));
+                        driver.executeScript("arguments[0].scrollIntoView();", scroll);
+                    }else if (type.equals("id")){
+                        WebElement scroll = driver.findElement(By.id(scroll_parse));
+                        driver.executeScript("arguments[0].scrollIntoView();", scroll);
+                    }else if (type.equals("class")){
+                        WebElement scroll = driver.findElement(By.className(scroll_parse));
+                        driver.executeScript("arguments[0].scrollIntoView();", scroll);
+                    }else if (type.equals("css")){
+                        WebElement scroll = driver.findElement(By.cssSelector(scroll_parse));
+                        driver.executeScript("arguments[0].scrollIntoView();", scroll);
+                    }else if (type.equals("name")){
+                        WebElement scroll = driver.findElement(By.name(scroll_parse));
+                        driver.executeScript("arguments[0].scrollIntoView();", scroll);
+                    }
+                    try {
+                        Thread.sleep(1200);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
                     }
                 }
 
@@ -686,6 +741,7 @@ class XmlSpider extends Spider<Map<String,Object>>{
             String type = "";
             String parse = "";
             String click_parse = "";
+            String scroll_parse = "";
             for (int j = 0; j < node.getChildNodes().getLength(); j++) {
                 Node element = node.getChildNodes().item(j);
                 if (element.getNodeName().equals("name")){
@@ -696,8 +752,35 @@ class XmlSpider extends Spider<Map<String,Object>>{
                     parse = element.getTextContent();
                 }else if (element.getNodeName().equals("click")){
                     click_parse = element.getTextContent();
+                }else if (element.getNodeName().equals("scroll")){
+                    scroll_parse = element.getTextContent();
                 }
             }
+
+            if(!scroll_parse.equals("")){
+                if (type.equals("xpath")) {
+                    WebElement scroll = webElement.findElement(By.xpath(scroll_parse));
+                    driver.executeScript("arguments[0].scrollIntoView();", scroll);
+                }else if (type.equals("id")){
+                    WebElement scroll = webElement.findElement(By.id(scroll_parse));
+                    driver.executeScript("arguments[0].scrollIntoView();", scroll);
+                }else if (type.equals("class")){
+                    WebElement scroll = webElement.findElement(By.className(scroll_parse));
+                    driver.executeScript("arguments[0].scrollIntoView();", scroll);
+                }else if (type.equals("css")){
+                    WebElement scroll = webElement.findElement(By.cssSelector(scroll_parse));
+                    driver.executeScript("arguments[0].scrollIntoView();", scroll);
+                }else if (type.equals("name")){
+                    WebElement scroll = webElement.findElement(By.name(scroll_parse));
+                    driver.executeScript("arguments[0].scrollIntoView();", scroll);
+                }
+                try {
+                    Thread.sleep(1200);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+
             if (!click_parse.equals("")){
                 if (type.equals("xpath")) {
                     WebElement click = webElement.findElement(By.xpath(click_parse));
@@ -752,6 +835,7 @@ class XmlSpider extends Spider<Map<String,Object>>{
             String type = "";
             String parse = "";
             String click_parse = "";
+            String scroll_parse = "";
             for (int j = 0; j < node.getChildNodes().getLength(); j++) {
                 Node element = node.getChildNodes().item(j);
                 if (element.getNodeName().equals("name")){
@@ -762,6 +846,32 @@ class XmlSpider extends Spider<Map<String,Object>>{
                     parse = element.getTextContent();
                 }else if (element.getNodeName().equals("click")){
                     click_parse = element.getTextContent();
+                }else if (element.getNodeName().equals("scroll")){
+                    scroll_parse = element.getTextContent();
+                }
+            }
+
+            if(!scroll_parse.equals("")){
+                if (type.equals("xpath")) {
+                    WebElement scroll = webElement.findElement(By.xpath(scroll_parse));
+                    driver.executeScript("arguments[0].scrollIntoView();", scroll);
+                }else if (type.equals("id")){
+                    WebElement scroll = webElement.findElement(By.id(scroll_parse));
+                    driver.executeScript("arguments[0].scrollIntoView();", scroll);
+                }else if (type.equals("class")){
+                    WebElement scroll = webElement.findElement(By.className(scroll_parse));
+                    driver.executeScript("arguments[0].scrollIntoView();", scroll);
+                }else if (type.equals("css")){
+                    WebElement scroll = webElement.findElement(By.cssSelector(scroll_parse));
+                    driver.executeScript("arguments[0].scrollIntoView();", scroll);
+                }else if (type.equals("name")){
+                    WebElement scroll = webElement.findElement(By.name(scroll_parse));
+                    driver.executeScript("arguments[0].scrollIntoView();", scroll);
+                }
+                try {
+                    Thread.sleep(1200);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
                 }
             }
 
