@@ -234,6 +234,9 @@ abstract class Spider<T> {
         if (method.equals("chromedriver")){
             driver.get(url);
             logger.info("get page from url: " + url);
+            try{
+                Thread.sleep(5000);
+            }catch (Exception ignored){ }
             return driver;
         }else if (method.equals("http")){
             logger.info("get page from url: " + url);
@@ -713,7 +716,7 @@ class XmlSpider extends Spider<Map<String,Object>>{
                     driver.executeScript("arguments[0].click();", click);
                 }
                 try {
-                    Thread.sleep(300);
+                    Thread.sleep(2000);
                 }catch (Exception ignored){ }
             }
             List<WebElement> _webElements = null;
@@ -728,6 +731,9 @@ class XmlSpider extends Spider<Map<String,Object>>{
             }else if (type.equals("name")){
                 _webElements = webElement.findElements(By.name(parse));
             }
+            try{
+                Thread.sleep(300);
+            }catch (Exception ignored){ }
             if (_webElements != null){
                 for (WebElement _webElement : _webElements) {
                     Map<String, Object> _resultMap = new HashMap<>();
