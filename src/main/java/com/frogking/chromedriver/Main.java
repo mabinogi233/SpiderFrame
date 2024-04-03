@@ -377,10 +377,6 @@ abstract class Spider<T> {
                 }
             });
             threads[j].start();
-            try{
-                Random random = new Random();
-                Thread.sleep(random.nextInt(3000)+5000);
-            }catch (Exception ignored){}
         }
         return threads;
     }
