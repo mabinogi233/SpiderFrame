@@ -501,6 +501,7 @@ class XmlSpider extends Spider<Map<String,Object>>{
                      String proxy_url,
                      int one_proxy_use_num){
         super("chromedriver",driverHome,urlPipeline,dataPipeline);
+
         this.document = document;
         this.proxy_url = proxy_url;
         this.one_proxy_use_num = one_proxy_use_num;
