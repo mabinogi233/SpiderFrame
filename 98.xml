@@ -1,0 +1,147 @@
+<spider>
+    <!-- spidername: spider name -->
+    <spidername>98</spidername>
+    <!-- urlfilepath: the file path of the url list to be crawled -->
+    <urlfilepath>/Users/lwz/Downloads/moft_url/women_top_handle_bags.txt</urlfilepath>
+    <!-- outputfilepath: the file path of the output data saved -->
+    <outputfilepath>/Users/lwz/Downloads/moft_url/data_11112222.json</outputfilepath>
+    <!-- restartfilepath: the file path of the restart data saved,
+    this file will be created automatically and used to restart the spider -->
+    <restartfilepath>/Users/lwz/Downloads/moft_url/data_11112222_log.txt</restartfilepath>
+    <!-- driverhome: the file path of the chromedriver -->
+    <driverhome>/Users/lwz/Documents/software/chromedriver/chromedriver-2</driverhome>
+    <!-- proxy_url: the url of the proxy server, response must be a string like ip:port -->
+    <proxy_url>http://zltiqu.pyhttp.taolop.com/getip?count=1&amp;neek=83892&amp;type=1&amp;yys=0&amp;port=1&amp;sb=&amp;mr=2&amp;sep=1</proxy_url>
+    <!-- one_proxy_use_num: the number of one proxy used for url number -->
+    <one_proxy_use_num>5</one_proxy_use_num>
+    <!-- write_waittime: the wait time of writing data to the output file between two writes -->
+    <write_waittime>30000</write_waittime>
+    <!-- spider_waittime: the wait time of the spider between two urls -->
+    <spider_waittime>8000</spider_waittime>
+    <!-- thread_num: the number of threads to crawl the urls -->
+    <thread_num>3</thread_num>
+    <!-- data: the data to be crawled -->
+    <data>
+        <element>
+            <name>name</name>
+            <type>css</type>
+            <parse>#__next > div > div.style_content__tUePa > div.style_info__jRs2x > div.style_right__xsJUV > div.style_productName__R38pT</parse>
+            <text>
+                <type>delete</type>
+                <regex>&lt;/?em&gt;</regex>
+            </text>
+        </element>
+        <element>
+            <name>color</name>
+            <type>css</type>
+            <parse>#__next > div > div.style_content__tUePa > div.style_info__jRs2x > div.style_right__xsJUV > div.style_colorSize__G35rD > div.style_colorTitle__K_yAx > span.style_name__NBLqt</parse>
+            <text>
+                <type>delete</type>
+                <regex>:</regex>
+            </text>
+        </element>
+        <elements>
+            <name>clo-sizes</name>
+            <type>css</type>
+            <parse>#__next > div > div.style_content__tUePa > div.style_info__jRs2x > div.style_right__xsJUV > div.style_colorSize__G35rD > div:nth-child(3) > div.fun-pc-bn-checkbox-group > div </parse>
+            <element>
+                <name>size</name>
+                <type>css</type>
+                <parse></parse>
+                <text>
+                    <type>delete</type>
+                    <regex></regex>
+                </text>
+            </element>
+        </elements>
+        <element>
+            <name>model-pic</name>
+            <type>css</type>
+            <parse>#__next > div > div.style_content__tUePa > div.style_info__jRs2x > div.style_right__xsJUV > div.style_model__NALUx > div.fun-pc-image-wrapper > img</parse>
+            <attribute>
+                <type>src</type>
+            </attribute>
+        </element>
+        <element>
+            <name>model-wear</name>
+            <type>css</type>
+            <parse>#__next > div > div.style_content__tUePa > div.style_info__jRs2x > div.style_right__xsJUV > div.style_model__NALUx > div.style_infos__wM51W > div.style_item__94ngr.style_line__nYnXw > span.style_value__PjdSQ</parse>
+            <text>
+                <type>delete</type>
+                <regex></regex>
+            </text>
+        </element>
+        <element>
+            <name>model-height</name>
+            <type>css</type>
+            <parse>#__next > div > div.style_content__tUePa > div.style_info__jRs2x > div.style_right__xsJUV > div.style_model__NALUx > div.style_infos__wM51W > div:nth-child(2) > span.style_value__PjdSQ</parse>
+            <text>
+                <type>delete</type>
+                <regex></regex>
+            </text>
+        </element>
+        <element>
+            <name>model-bust</name>
+            <type>css</type>
+            <parse>#__next > div > div.style_content__tUePa > div.style_info__jRs2x > div.style_right__xsJUV > div.style_model__NALUx > div.style_infos__wM51W > div:nth-child(3) > span.style_value__PjdSQ</parse>
+            <text>
+                <type>delete</type>
+                <regex></regex>
+            </text>
+        </element>
+        <element>
+            <name>model-waist</name>
+            <type>css</type>
+            <parse>#__next > div > div.style_content__tUePa > div.style_info__jRs2x > div.style_right__xsJUV > div.style_model__NALUx > div.style_infos__wM51W > div:nth-child(4) > span.style_value__PjdSQ</parse>
+            <text>
+                <type>delete</type>
+                <regex></regex>
+            </text>
+        </element>
+        <element>
+            <name>model-hips</name>
+            <type>css</type>
+            <parse>#__next > div > div.style_content__tUePa > div.style_info__jRs2x > div.style_right__xsJUV > div.style_model__NALUx > div.style_infos__wM51W > div:nth-child(5) > span.style_value__PjdSQ</parse>
+            <text>
+                <type>delete</type>
+                <regex></regex>
+            </text>
+        </element>
+        <elements>
+            <name>model-wear-pics</name>
+            <type>css</type>
+            <parse>#__next > div > div.style_content__tUePa > div.style_info__jRs2x > div.fun-pc-bn-gallery-wrapper > div.fun-pc-bn-gallery-thumbnails > div</parse>
+            <element>
+                <name>model-wear-pic</name>
+                <type>css</type>
+                <parse>div > img</parse>
+                <attribute>
+                    <type>src</type>
+                </attribute>
+            </element>
+        </elements>
+        <elements>
+            <name>clo-pics</name>
+            <type>css</type>
+            <parse>#__next > div > div.style_content__tUePa > div.style_moreDetails__tOC8t > div:nth-child(2) > div > div.swiper-wrapper > div</parse>
+            <element>
+                <name>clo-pic</name>
+                <type>css</type>
+                <parse>div > img</parse>
+                <attribute>
+                    <type>src</type>
+                </attribute>
+            </element>
+        </elements>
+        <element>
+            <name>detail</name>
+            <type>css</type>
+            <click>#__next > div > div.style_content__tUePa > div.style_info__jRs2x > div.style_right__xsJUV > div.style_extra___1i0t > div.style_collapse__DwQDy.fun-pc-bn-collapse-wrapper > div.fun-pc-bn-collapse-header > span.fun-pc-bn-collapse-add.fun-pc-bn-collapse-cursor.fun-pc-icon-wrapper</click>
+            <parse>#__next > div > div.style_content__tUePa > div.style_info__jRs2x > div.style_right__xsJUV > div.style_extra___1i0t > div.style_collapse__DwQDy.fun-pc-bn-collapse-wrapper > div:nth-child(2) > div</parse>
+            <text>
+                <type>delete</type>
+                <regex></regex>
+            </text>
+        </element>
+    </data>
+</spider>
