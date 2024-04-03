@@ -21,6 +21,7 @@ import java.nio.charset.StandardCharsets;
 import java.time.Duration;
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -89,7 +90,7 @@ class URLPipeline{
 }
 
 class DataPipeline<T>{
-    private List<Map<String,Object>> data = new ArrayList<>();
+    private List<Map<String,Object>> data = new CopyOnWriteArrayList<>();
 
     synchronized public void addData(String url,T d){
         Map<String,Object> map = new ConcurrentHashMap<>();
