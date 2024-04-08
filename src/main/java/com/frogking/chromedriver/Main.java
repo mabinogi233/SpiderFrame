@@ -76,7 +76,8 @@ class URLPipeline{
                 urls.add(line.strip());
             }
             if (restartFilePath != null && new File(restartFilePath).exists()){
-                while ((line = br.readLine()) != null){
+                BufferedReader br2 = new BufferedReader(new FileReader(restartFilePath));
+                while ((line = br2.readLine()) != null){
                     if (urls.contains(line.strip())){
                         urls.remove(line.strip());
                     }

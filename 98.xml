@@ -123,6 +123,8 @@
         <elements>
             <name>clo-pics</name>
             <type>css</type>
+            <scroll>#__next > div > div.style_content__tUePa > div.style_moreDetails__tOC8t > div:nth-child(2) > div > div.swiper-wrapper</scroll>
+            <click>#__next > div > div.style_content__tUePa > div.style_moreDetails__tOC8t > div:nth-child(2) > div > div.fun-pc-pc-swiper-button</click>
             <parse>#__next > div > div.style_content__tUePa > div.style_moreDetails__tOC8t > div:nth-child(2) > div > div.swiper-wrapper > div</parse>
             <element>
                 <name>clo-pic</name>
